@@ -1,0 +1,900 @@
+/**
+ * Owl Carousel v2.3.4
+ * Copyright 2013-2018 rstarr84
+ * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
+ */
+
+
+/*
+ *  Owl Carousel - Core
+ */
+
+.owl-carousel {
+    display: none;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* position relative and z-index fix webkit rendering fonts issue */
+    position: relative;
+    z-index: 1;
+}
+
+.owl-carousel .owl-stage {
+    position: relative;
+    -ms-touch-action: pan-Y;
+    touch-action: manipulation;
+    -moz-backface-visibility: hidden;
+    /* fix firefox animation glitch */
+}
+
+.owl-carousel .owl-stage:after {
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    line-height: 0;
+    height: 0;
+}
+
+.owl-carousel .owl-stage-outer {
+    position: relative;
+    overflow: hidden;
+    /* fix for flashing background */
+    -webkit-transform: translate3d(0px, 0px, 0px);
+}
+
+.owl-carousel .owl-wrapper,
+.owl-carousel .owl-item {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+}
+
+.owl-carousel .owl-item {
+    position: relative;
+    min-height: 1px;
+    float: left;
+    -webkit-backface-visibility: hidden;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+.owl-carousel .owl-item img {
+    display: block;
+    width: 100%;
+}
+
+.owl-carousel .owl-nav.disabled,
+.owl-carousel .owl-dots.disabled {
+    display: none;
+}
+
+.owl-carousel .owl-nav .owl-prev,
+.owl-carousel .owl-nav .owl-next,
+.owl-carousel .owl-dot {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel .owl-nav button.owl-next,
+.owl-carousel button.owl-dot {
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0 !important;
+    font: inherit;
+}
+
+.owl-carousel.owl-loaded {
+    display: block;
+}
+
+.owl-carousel.owl-loading {
+    opacity: 0;
+    display: block;
+}
+
+.owl-carousel.owl-hidden {
+    opacity: 0;
+}
+
+.owl-carousel.owl-refresh .owl-item {
+    visibility: hidden;
+}
+
+.owl-carousel.owl-drag .owl-item {
+    -ms-touch-action: pan-y;
+    touch-action: pan-y;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.owl-carousel.owl-grab {
+    cursor: move;
+    cursor: grab;
+}
+
+.owl-carousel.owl-rtl {
+    direction: rtl;
+}
+
+.owl-carousel.owl-rtl .owl-item {
+    float: right;
+}
+
+
+/* No Js */
+
+.no-js .owl-carousel {
+    display: block;
+}
+
+
+/*
+ *  Owl Carousel - Animate Plugin
+ */
+
+.owl-carousel .animated {
+    animation-duration: 1000ms;
+    animation-fill-mode: both;
+}
+
+.owl-carousel .owl-animated-in {
+    z-index: 0;
+}
+
+.owl-carousel .owl-animated-out {
+    z-index: 1;
+}
+
+.owl-carousel .fadeOut {
+    animation-name: fadeOut;
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/*
+ * 	Owl Carousel - Auto Height Plugin
+ */
+
+.owl-height {
+    transition: height 500ms ease-in-out;
+}
+
+
+/*
+ * 	Owl Carousel - Lazy Load Plugin
+ */
+
+.owl-carousel .owl-item {
+    /**
+			This is introduced due to a bug in IE11 where lazy loading combined with autoheight plugin causes a wrong
+			calculation of the height of the owl-item that breaks page layouts
+		 */
+}
+
+.owl-carousel .owl-item .owl-lazy {
+    opacity: 0;
+    transition: opacity 400ms ease;
+}
+
+.owl-carousel .owl-item .owl-lazy[src^=""],
+.owl-carousel .owl-item .owl-lazy:not([src]) {
+    max-height: 0;
+}
+
+.owl-carousel .owl-item img.owl-lazy {
+    transform-style: preserve-3d;
+}
+
+
+/*
+ * 	Owl Carousel - Video Plugin
+ */
+
+.owl-carousel .owl-video-wrapper {
+    position: relative;
+    height: 100%;
+    background: #000;
+}
+
+.owl-carousel .owl-video-play-icon {
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    left: 50%;
+    top: 50%;
+    margin-left: -40px;
+    margin-top: -40px;
+    background: url("owl.video.play.png") no-repeat;
+    cursor: pointer;
+    z-index: 1;
+    -webkit-backface-visibility: hidden;
+    transition: transform 100ms ease;
+}
+
+.owl-carousel .owl-video-play-icon:hover {
+    -ms-transform: scale(1.3, 1.3);
+    transform: scale(1.3, 1.3);
+}
+
+.owl-carousel .owl-video-playing .owl-video-tn,
+.owl-carousel .owl-video-playing .owl-video-play-icon {
+    display: none;
+}
+
+.owl-carousel .owl-video-tn {
+    opacity: 0;
+    height: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: opacity 400ms ease;
+}
+
+.owl-carousel .owl-video-frame {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+}
+
+.component.DynamicCarousel {
+    height: 100vh;
+    position: relative;
+    overflow-y: hidden;
+    margin-bottom: 40px
+}
+
+.component.DynamicCarousel h1.careerHeading,
+.component.DynamicCarousel h1.careerHeading.display,
+.component.DynamicCarousel h2.careerHeading,
+.component.DynamicCarousel h2.careerHeading.display,
+.component.DynamicCarousel h3.careerHeading,
+.component.DynamicCarousel h3.careerHeading.display {
+    font-size: 1.5rem
+}
+
+@media screen and (min-width:40.0625em) {
+    .component.DynamicCarousel h1.careerHeading.display,
+    .component.DynamicCarousel h2.careerHeading.display,
+    .component.DynamicCarousel h3.careerHeading.display {
+        font-size: 2rem
+    }
+}
+
+@media screen and (min-width:48.0625em) {
+    .component.DynamicCarousel h1.careerHeading.display,
+    .component.DynamicCarousel h2.careerHeading.display,
+    .component.DynamicCarousel h3.careerHeading.display {
+        font-size: 2rem
+    }
+}
+
+@media screen and (min-width:64em) {
+    .component.DynamicCarousel h1.careerHeading.display,
+    .component.DynamicCarousel h2.careerHeading.display,
+    .component.DynamicCarousel h3.careerHeading.display {
+        font-size: 2rem
+    }
+}
+
+@media screen and (min-width:40.0625em) {
+    .component.DynamicCarousel h1.careerHeading,
+    .component.DynamicCarousel h2.careerHeading,
+    .component.DynamicCarousel h3.careerHeading {
+        font-size: 2rem
+    }
+}
+
+@media screen and (min-width:48.0625em) {
+    .component.DynamicCarousel h1.careerHeading,
+    .component.DynamicCarousel h2.careerHeading,
+    .component.DynamicCarousel h3.careerHeading {
+        font-size: 2rem
+    }
+}
+
+@media screen and (min-width:64em) {
+    .component.DynamicCarousel h1.careerHeading,
+    .component.DynamicCarousel h2.careerHeading,
+    .component.DynamicCarousel h3.careerHeading {
+        font-size: 2rem
+    }
+}
+
+.component.DynamicCarousel h1,
+.component.DynamicCarousel h2,
+.component.DynamicCarousel h3 {
+    margin: 0 0 2.5rem;
+    padding: 0
+}
+
+.component.DynamicCarousel h1.carouselItemHeading,
+.component.DynamicCarousel h2.carouselItemHeading,
+.component.DynamicCarousel h3.carouselItemHeading,
+.component.DynamicCarousel h4.carouselItemHeading {
+    display: inline-block;
+    padding: 5px 8px;
+    line-height: 1.4rem;
+    margin-bottom: 10px;
+    opacity: .9;
+    font-size: 1.125rem
+}
+
+@media screen and (min-width:40.0625em) {
+    .component.DynamicCarousel h1.carouselItemHeading,
+    .component.DynamicCarousel h2.carouselItemHeading,
+    .component.DynamicCarousel h3.carouselItemHeading,
+    .component.DynamicCarousel h4.carouselItemHeading {
+        font-size: 1.375rem
+    }
+}
+
+@media screen and (min-width:48.0625em) {
+    .component.DynamicCarousel h1.carouselItemHeading,
+    .component.DynamicCarousel h2.carouselItemHeading,
+    .component.DynamicCarousel h3.carouselItemHeading,
+    .component.DynamicCarousel h4.carouselItemHeading {
+        font-size: 1.375rem
+    }
+}
+
+@media screen and (min-width:64em) {
+    .component.DynamicCarousel h1.carouselItemHeading,
+    .component.DynamicCarousel h2.carouselItemHeading,
+    .component.DynamicCarousel h3.carouselItemHeading,
+    .component.DynamicCarousel h4.carouselItemHeading {
+        font-size: 1.375rem
+    }
+}
+
+@media screen and (min-width:64em) {
+    .lmb .component.DynamicCarousel h1.carouselItemHeading,
+    .lmb .component.DynamicCarousel h2.carouselItemHeading,
+    .lmb .component.DynamicCarousel h3.carouselItemHeading,
+    .lmb .component.DynamicCarousel h4.carouselItemHeading,
+    .ocap .component.DynamicCarousel h1.carouselItemHeading,
+    .ocap .component.DynamicCarousel h2.carouselItemHeading,
+    .ocap .component.DynamicCarousel h3.carouselItemHeading,
+    .ocap .component.DynamicCarousel h4.carouselItemHeading,
+    .rb .component.DynamicCarousel h1.carouselItemHeading,
+    .rb .component.DynamicCarousel h2.carouselItemHeading,
+    .rb .component.DynamicCarousel h3.carouselItemHeading,
+    .rb .component.DynamicCarousel h4.carouselItemHeading,
+    .tlg .component.DynamicCarousel h1.carouselItemHeading,
+    .tlg .component.DynamicCarousel h2.carouselItemHeading,
+    .tlg .component.DynamicCarousel h3.carouselItemHeading,
+    .tlg .component.DynamicCarousel h4.carouselItemHeading {
+        background-color: #fff
+    }
+}
+
+.component.DynamicCarousel .snickers-loader {
+    width: 2.28571429rem;
+    height: 2.28571429rem;
+    font-size: 1em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    text-align: center;
+    z-index: 1000;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%)
+}
+
+.component.DynamicCarousel .snickers-loader:after,
+.component.DynamicCarousel .snickers-loader:before {
+    width: 2.28571429rem;
+    height: 2.28571429rem;
+    margin: 0 0 0 -1.14285714rem
+}
+
+.component.DynamicCarousel .snickers-loader:after {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 50%;
+    -webkit-animation: b .6s linear;
+    animation: b .6s linear;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    border-radius: 500rem;
+    border-color: #767676 transparent transparent;
+    border-style: solid;
+    border-width: .2em;
+    box-shadow: 0 0 0 1px transparent
+}
+
+.component.DynamicCarousel .snickers-loader:before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 50%;
+    border-radius: 500rem;
+    border: .2em solid rgba(0, 0, 0, .1)
+}
+
+.component.DynamicCarousel .snickers-pane {
+    position: relative;
+    overflow: hidden;
+    height: 80vh
+}
+
+.component.DynamicCarousel .snickers-wrapper {
+    display: none;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    padding: 4.375rem 0
+}
+
+.component.DynamicCarousel .snickers-wrapper>picture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%
+}
+
+.component.DynamicCarousel .snickers-wrapper>picture>img {
+    object-fit: cover;
+    font-family: "object-fit: cover;";
+    height: 100%;
+    width: 100%
+}
+
+.component.DynamicCarousel .snickers-content {
+    position: absolute;
+    width: 100%;
+    top: 200px
+}
+
+.component.DynamicCarousel .snickers-target {
+    -webkit-transform-origin: 0 50%;
+    -ms-transform-origin: 0 50%;
+    transform-origin: 0 50%
+}
+
+.component.DynamicCarousel .snickers-line {
+    position: absolute;
+    top: 1.25rem;
+    width: .125rem;
+    right: 2.46875rem;
+    height: 100%;
+    transition: height .25s
+}
+
+.component.DynamicCarousel .vertical.menu {
+    position: relative;
+    overflow: hidden;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    margin: 65px 0
+}
+
+.component.DynamicCarousel .vertical.menu li {
+    display: block;
+    text-align: right;
+    font-size: 1.125rem;
+    line-height: 1.125rem;
+    padding: .3125rem 3.75rem .3125rem 0;
+    transition: color .5s, -webkit-transform .2s ease-out;
+    transition: transform .2s ease-out, color .5s;
+    transition: transform .2s ease-out, color .5s, -webkit-transform .2s ease-out;
+    white-space: nowrap;
+    z-index: 2
+}
+
+.component.DynamicCarousel .vertical.menu li:before {
+    content: "";
+    width: .75rem;
+    height: .75rem;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    right: 2.15625rem;
+    top: 50%;
+    -webkit-transform: translateY(-50%) scale(1);
+    -ms-transform: translateY(-50%) scale(1);
+    transform: translateY(-50%) scale(1);
+    transition: background-color .25s, border-width .25s, -webkit-transform .25s;
+    transition: background-color .25s, transform .25s, border-width .25s;
+    transition: background-color .25s, transform .25s, border-width .25s, -webkit-transform .25s
+}
+
+.component.DynamicCarousel .vertical.menu li a {
+    display: block;
+    -webkit-transform: scale(.8);
+    -ms-transform: scale(.8);
+    transform: scale(.8);
+    -webkit-transform-origin: 100% 50%;
+    -ms-transform-origin: 100% 50%;
+    transform-origin: 100% 50%;
+    transition: -webkit-transform .25s;
+    transition: transform .25s;
+    transition: transform .25s, -webkit-transform .25s;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word;
+    max-width: 230px
+}
+
+.component.DynamicCarousel .vertical.menu li.active:before {
+    border: 1px solid;
+    -webkit-transform: translateY(-50%) scale(1.75);
+    -ms-transform: translateY(-50%) scale(1.75);
+    transform: translateY(-50%) scale(1.75)
+}
+
+.component.DynamicCarousel .vertical.menu li.active a {
+    font-family: LindeDaxReg, Arial, sans-serif;
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1)
+}
+
+.component.DynamicCarousel .snickers-static {
+    background-attachment: fixed
+}
+
+.lmb .component.DynamicCarousel .snickers-static,
+.tlg .component.DynamicCarousel .snickers-static {
+    background: url(/images/Module_DK_Background.jpg) no-repeat;
+    background-size: cover
+}
+
+.rb .component.DynamicCarousel .snickers-static {
+    background: url(/images/Module_DK_Background.jpg) no-repeat;
+    background-size: cover;
+    background: url(/images/Module_DK_Background_RB.jpg) no-repeat
+}
+
+.ocap .component.DynamicCarousel .snickers-static {
+    background: url(/images/Module_DK_Background.jpg) no-repeat;
+    background-size: cover
+}
+
+.component.DynamicCarousel .snickers-static .head {
+    position: relative;
+    height: 100px
+}
+
+.component.DynamicCarousel .snickers-static .head .pipe {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translateX(-1px);
+    -ms-transform: translateX(-1px);
+    transform: translateX(-1px);
+    width: 2px;
+    height: 100%
+}
+
+.component.DynamicCarousel .snickers-static .head .pipe h4 {
+    font-size: 1.125rem;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    -webkit-transform: translateY(-25%);
+    -ms-transform: translateY(-25%);
+    transform: translateY(-25%);
+    width: 40vw;
+    text-align: right
+}
+
+.component.DynamicCarousel .snickers-static .head .pipe h4:after {
+    content: "";
+    width: 24px;
+    height: 24px;
+    border: 2px solid;
+    border-radius: 50%;
+    display: block;
+    position: absolute;
+    right: -31px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    z-index: 1
+}
+
+.component.DynamicCarousel .snickers-static .entry-body {
+    padding: 0
+}
+
+.component.DynamicCarousel .snickers-static .entry-body,
+.component.DynamicCarousel .snickers-static .entry-image {
+    margin-bottom: 20px
+}
+
+.component.DynamicCarousel .entry-image {
+    text-align: center
+}
+
+.component.DynamicCarousel .entry-body {
+    padding: 0 30px
+}
+
+.component.DynamicCarousel .xsmall-4-in-9 {
+    -webkit-flex: 0 0 44.44444%;
+    -ms-flex: 0 0 44.44444%;
+    flex: 0 0 44.44444%;
+    max-width: 44.44444%
+}
+
+.component.DynamicCarousel .xsmall-5-in-9 {
+    -webkit-flex: 0 0 55.55555%;
+    -ms-flex: 0 0 55.55555%;
+    flex: 0 0 55.55555%;
+    max-width: 55.55555%
+}
+
+@-webkit-keyframes b {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn)
+    }
+}
+
+@keyframes b {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0)
+    }
+    to {
+        -webkit-transform: rotate(1turn);
+        transform: rotate(1turn)
+    }
+}
+
+.tlg .component.DynamicCarousel h1,
+.tlg .component.DynamicCarousel h2,
+.tlg .component.DynamicCarousel h3 {
+    color: #002d5a
+}
+
+.lmb .component.DynamicCarousel h1,
+.lmb .component.DynamicCarousel h2,
+.lmb .component.DynamicCarousel h3 {
+    color: #005591
+}
+
+.rb .component.DynamicCarousel h1,
+.rb .component.DynamicCarousel h2,
+.rb .component.DynamicCarousel h3 {
+    color: #586060
+}
+
+.ocap .component.DynamicCarousel h1,
+.ocap .component.DynamicCarousel h2,
+.ocap .component.DynamicCarousel h3 {
+    color: #78b928
+}
+
+.tlg .component.DynamicCarousel h1.itemHeading2,
+.tlg .component.DynamicCarousel h2.itemHeading2,
+.tlg .component.DynamicCarousel h3.itemHeading2,
+.tlg .component.DynamicCarousel h4.itemHeading2 {
+    color: #008ccd
+}
+
+.lmb .component.DynamicCarousel h1.itemHeading2,
+.lmb .component.DynamicCarousel h2.itemHeading2,
+.lmb .component.DynamicCarousel h3.itemHeading2,
+.lmb .component.DynamicCarousel h4.itemHeading2 {
+    color: #00a0e1
+}
+
+.rb .component.DynamicCarousel h1.itemHeading2,
+.rb .component.DynamicCarousel h2.itemHeading2,
+.rb .component.DynamicCarousel h3.itemHeading2,
+.rb .component.DynamicCarousel h4.itemHeading2 {
+    color: red
+}
+
+.ocap .component.DynamicCarousel h1.itemHeading2,
+.ocap .component.DynamicCarousel h2.itemHeading2,
+.ocap .component.DynamicCarousel h3.itemHeading2,
+.ocap .component.DynamicCarousel h4.itemHeading2 {
+    color: #6e7878
+}
+
+.tlg .component.DynamicCarousel .snickers-line {
+    background-color: #002d5a
+}
+
+.lmb .component.DynamicCarousel .snickers-line {
+    background-color: #005591
+}
+
+.rb .component.DynamicCarousel .snickers-line {
+    background-color: #586060
+}
+
+.ocap .component.DynamicCarousel .snickers-line {
+    background-color: #78b928
+}
+
+.lmb .component.DynamicCarousel .vertical.menu li,
+.ocap .component.DynamicCarousel .vertical.menu li,
+.rb .component.DynamicCarousel .vertical.menu li,
+.tlg .component.DynamicCarousel .vertical.menu li {
+    color: #000
+}
+
+.tlg .component.DynamicCarousel .vertical.menu li:before {
+    background-color: #002d5a
+}
+
+.lmb .component.DynamicCarousel .vertical.menu li:before {
+    background-color: #005591
+}
+
+.rb .component.DynamicCarousel .vertical.menu li:before {
+    background-color: #586060
+}
+
+.ocap .component.DynamicCarousel .vertical.menu li:before {
+    background-color: #78b928
+}
+
+.tlg .component.DynamicCarousel .vertical.menu li a {
+    color: #002d5a
+}
+
+.lmb .component.DynamicCarousel .vertical.menu li a {
+    color: #005591
+}
+
+.rb .component.DynamicCarousel .vertical.menu li a {
+    color: #586060
+}
+
+.ocap .component.DynamicCarousel .vertical.menu li a {
+    color: #78b928
+}
+
+.tlg .component.DynamicCarousel .vertical.menu li.active:before {
+    border-color: #fff;
+    background-color: #008ccd
+}
+
+.lmb .component.DynamicCarousel .vertical.menu li.active:before {
+    border-color: #fff;
+    background-color: #00a0e1
+}
+
+.rb .component.DynamicCarousel .vertical.menu li.active:before {
+    border-color: #fff;
+    background-color: red
+}
+
+.ocap .component.DynamicCarousel .vertical.menu li.active:before {
+    border-color: #fff;
+    background-color: #6e7878
+}
+
+.tlg .component.DynamicCarousel .vertical.menu li.active a {
+    color: #008ccd
+}
+
+.lmb .component.DynamicCarousel .vertical.menu li.active a {
+    color: #00a0e1
+}
+
+.rb .component.DynamicCarousel .vertical.menu li.active a {
+    color: red
+}
+
+.ocap .component.DynamicCarousel .vertical.menu li.active a {
+    color: #6e7878
+}
+
+.tlg .component.DynamicCarousel .snickers-static .head .pipe {
+    background-color: #002d5a
+}
+
+.lmb .component.DynamicCarousel .snickers-static .head .pipe {
+    background-color: #005591
+}
+
+.rb .component.DynamicCarousel .snickers-static .head .pipe {
+    background-color: #586060
+}
+
+.ocap .component.DynamicCarousel .snickers-static .head .pipe {
+    background-color: #78b928
+}
+
+.tlg .component.DynamicCarousel .snickers-static .head .pipe h4:after {
+    background-color: #008ccd;
+    border-color: #fff
+}
+
+.lmb .component.DynamicCarousel .snickers-static .head .pipe h4:after {
+    background-color: #00a0e1;
+    border-color: #fff
+}
+
+.rb .component.DynamicCarousel .snickers-static .head .pipe h4:after {
+    background-color: red;
+    border-color: #fff
+}
+
+.ocap .component.DynamicCarousel .snickers-static .head .pipe h4:after {
+    background-color: #6e7878;
+    border-color: #fff
+}
+
+.tlg .component.DynamicCarousel .entry-description {
+    color: #002d5a
+}
+
+.lmb .component.DynamicCarousel .entry-description {
+    color: #005591
+}
+
+.rb .component.DynamicCarousel .entry-description {
+    color: #586060
+}
+
+.ocap .component.DynamicCarousel .entry-description {
+    color: #78b928
+}
+
+.component.DynamicCarousel.static {
+    height: auto;
+    min-height: 150px
+}
+
+.component.DynamicCarousel.static .snickers-loader,
+.component.DynamicCarousel.static .snickers-wrapper {
+    display: none
+}
+
+.component.DynamicCarousel.static .snickers-static {
+    display: block;
+    padding: 2.5rem .9375rem
+}
+
+.component.DynamicCarousel.dynamic.loaded .snickers-loader {
+    display: none
+}
+
+.component.DynamicCarousel.dynamic.loaded .snickers-wrapper,
+.component.DynamicCarousel.dynamic .snickers-loader {
+    display: block
+}
+
+.component.DynamicCarousel.dynamic .snickers-static,
+.component.DynamicCarousel.dynamic .snickers-wrapper {
+    display: none
+}
